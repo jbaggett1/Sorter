@@ -12,10 +12,11 @@ public class Sorter <E extends Comparable<? super E>>
     public static void main(String[] args)
     {   Sorter<Integer> example = new Sorter<Integer>();
         example.insert(10);
-        example.insert(5);
         example.insert(0);
+        example.insert(5);
         example.insert(24);
-        example.mergesort();
+        example.insert(6);
+        example.quicksort();
         for (int i = 0; i < example.heap.size(); i++)
         {
          System.out.println("\n" + example.heap.get(i).element.toString());
@@ -182,7 +183,47 @@ public class Sorter <E extends Comparable<? super E>>
             arrInd++;
         }
     }
-    
+    //Following methods are used to implement the quicksort
+    //Because multiple different pivots can be used, this one implements picking the first value in 
+    //the list as a pivot to sort around 
+    public void quicksort()
+    {  quicksort(this.heap, 0, heap.size()-1);
+    }
+    public void quicksort(ArrayList<Node> array, int low, int high)
+    { 
+      //Define value of node that is being pivoted around
+      Node pivot = new Node(array.get(low).element);
+      //Start value for pivot index
+      int pivotIndex = low;
+      //Define index in list where values start being higher than the pivot 
+      int higherThan = -1;
+      //Begin the for loop after the first element
+      for (int i = low + 1; i <= high; i++)
+      
+      {   int gap = Math.abs(pivotIndex - i);
+          if (array.get(i).element.compareTo(pivot.element) <= 0 && gap == 1)
+          {  switchPosition(i,pivotIndex);
+             pivotIndex = i;
+            }
+          else if (array.get(i).element.compareTo(pivot.element) <= 0 && gap > 1)
+          { //higherThan = i;
+            switchPosition(i, pivotIndex);
+            switchPosition(i, pivotIndex + 1);  
+            //pivotIndex = higherThan;
+            //higherThan++;
+            }
+          else // (array.get(i).element.compareTo(pivot.element) > 0 )
+          {  //Do nothing, element should stay in its position greater than the pivot
+            }
+           
+        }
+       if ((pivotIndex - 1) >= 1)
+        {quicksort(array, low, pivotIndex - 1);}
+       if ((high - pivotIndex) >= 1)
+       {
+        quicksort(array, pivotIndex + 1, high-1); 
+    }
+    }
     protected class Node {
         // since this is a private inner class, and the outer AVLTree class
         // will need to freely modify the connections and update the height
