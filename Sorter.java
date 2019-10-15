@@ -11,11 +11,12 @@ public class Sorter <E extends Comparable<? super E>>
     protected ArrayList<Node> heap;
     public static void main(String[] args)
     {   Sorter<Integer> example = new Sorter<Integer>();
-        example.insert(10);
-        example.insert(0);
-        example.insert(5);
-        example.insert(24);
-        example.insert(6);
+        example.insertAsList(3);
+        example.insertAsList(2);
+        example.insertAsList(1);
+        example.insertAsList(4);
+        example.insertAsList(0);
+        example.insertAsList(7);
         example.quicksort();
         for (int i = 0; i < example.heap.size(); i++)
         {
@@ -32,6 +33,12 @@ public class Sorter <E extends Comparable<? super E>>
         this.size = 0;
         this.heap = new ArrayList<Node>();
 
+    }
+    public void insertAsList(E element)
+    {
+        this.size++;
+        Node toInsert = new Node(element);
+        heap.add(toInsert);
     }
         public void insert(E element)
     { //Increase the size of the heap
@@ -208,7 +215,12 @@ public class Sorter <E extends Comparable<? super E>>
           else if (array.get(i).element.compareTo(pivot.element) <= 0 && gap > 1)
           { //higherThan = i;
             switchPosition(i, pivotIndex);
-            switchPosition(i, pivotIndex + 1);  
+            int temp = i;
+            i = pivotIndex;
+            pivotIndex = temp;
+            switchPosition(i+1, pivotIndex);  
+            pivotIndex = i+1;
+            //i++;
             //pivotIndex = higherThan;
             //higherThan++;
             }
@@ -217,12 +229,27 @@ public class Sorter <E extends Comparable<? super E>>
             }
            
         }
+        System.out.println("Pivot index: " + pivotIndex + "\n");
+                for (int i = 0; i < array.size(); i++)
+        {
+         System.out.println(" " + array.get(i).element.toString());
+        }
        if ((pivotIndex - 1) >= 1)
-        {quicksort(array, low, pivotIndex - 1);}
+        {   quicksort(array, 0, pivotIndex - 1);
+            System.out.println("\n low index call, pivot element " + array.get(pivotIndex).element.toString());
+        }
        if ((high - pivotIndex) >= 1)
        {
         quicksort(array, pivotIndex + 1, high-1); 
+        }
     }
+    public ArrayList<Integer> getArray()
+    {
+        ArrayList<Integer> arrayString = new ArrayList<Integer>();
+        for (int i = 0; i < this.heap.size(); i++)
+        {   arrayString.add(Integer.parseInt(this.heap.get(i).element.toString()));
+        }
+        return arrayString;
     }
     protected class Node {
         // since this is a private inner class, and the outer AVLTree class
