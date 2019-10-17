@@ -10,17 +10,19 @@ public class Sorter <E extends Comparable<? super E>>
     protected int largestSize; 
     protected ArrayList<Node> heap;
     public static void main(String[] args)
-    {   Sorter<Integer> example = new Sorter<Integer>();
-        example.insertAsList(3);
-        example.insertAsList(2);
-        example.insertAsList(1);
-        example.insertAsList(4);
-        example.insertAsList(0);
-        example.insertAsList(7);
-        example.quicksort();
-        for (int i = 0; i < example.heap.size(); i++)
+    {   Sorter<Integer> example2 = new Sorter<Integer>();
+        example2.insert(5);
+        example2.insert(4);
+        example2.insert(3);
+        example2.insert(2);
+        //example2.insert(1);
+        //example2.insertAsList(5);
+        //example2.mergesort();
+        //example2.quicksort();
+        example2.heapsort();
+        for (int i = 0; i < example2.heap.size(); i++)
         {
-         System.out.println("\n" + example.heap.get(i).element.toString());
+         System.out.println("\n" + example2.heap.get(i).element.toString());
         }
     }   
     
@@ -40,7 +42,7 @@ public class Sorter <E extends Comparable<? super E>>
         Node toInsert = new Node(element);
         heap.add(toInsert);
     }
-        public void insert(E element)
+    public void insert(E element)
     { //Increase the size of the heap
       this.size++;
       //Create new node with the given element 
@@ -85,13 +87,14 @@ public class Sorter <E extends Comparable<? super E>>
       {     largestInd = leftInd;
         }
       
-              if (rightInd < size && (array.get(rightInd).element.compareTo(array.get(rootInd).element) > 0))
+      if (rightInd < size && (array.get(rightInd).element.compareTo(array.get(rootInd).element) > 0))
       {     largestInd = rightInd;
         }
         
        if (largestInd != rootInd)
-       { switchPosition(largestInd,rootInd);
-          heapify(array, size, largestInd);
+       { 
+          switchPosition(largestInd,rootInd);
+          heapify(array, size, rootInd);
         }
     }
     
@@ -118,7 +121,7 @@ public class Sorter <E extends Comparable<? super E>>
     
     //Following code pertains to mergesort 
     public void mergesort()
-    {   sort(this.heap, 0, heap.size());
+    {   sort(this.heap, 0, heap.size()-1);
     }
     
     public void sort(ArrayList<Node> array, int left, int n)
@@ -148,7 +151,7 @@ public class Sorter <E extends Comparable<? super E>>
         }
         
         for (int i = 0; i < (n - split); i++)
-        {  Node tempNode = new Node(array.get(split + i).element);
+        {  Node tempNode = new Node(array.get(split + 1 + i).element);
             rightList.add(tempNode);
             tempNode = null; 
         }
@@ -164,10 +167,12 @@ public class Sorter <E extends Comparable<? super E>>
         {
             if (leftList.get(pointerLeft).element.compareTo(rightList.get(pointerRight).element) <= 0 )
             {   array.get(arrInd).element = leftList.get(pointerLeft).element;
+                System.out.println("\nLeft " + array.get(arrInd).element);
                 pointerLeft++;
             }
             else
             { array.get(arrInd).element = rightList.get(pointerRight).element;
+                System.out.println("\nRight " + array.get(arrInd).element);
                 pointerRight++;
             }
             arrInd++;
@@ -176,14 +181,14 @@ public class Sorter <E extends Comparable<? super E>>
         //Once exited while, it means one list has been completely merged in and the tail of the 
         //unmerged one needs to be tacked on the end 
         
-        while (pointerLeft < (split - left))
+        while (pointerLeft < (split - left + 1))
         {
             array.get(arrInd).element = leftList.get(pointerLeft).element;
             pointerLeft++;
             arrInd++;
         }
         
-        while (pointerRight < (n - split -1))
+        while (pointerRight < (n - split))
         {
             array.get(arrInd).element = rightList.get(pointerRight).element;
             pointerRight++;

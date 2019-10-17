@@ -38,9 +38,43 @@ public class SorterTest
     }
     @Test 
     public void testMergeSort()
-    {
+    {         //Testing case where numbers increase
+        example2.insertAsList(1);
+        example2.insertAsList(2);
+        example2.insertAsList(3);
+        example2.insertAsList(4);
+        example2.insertAsList(5);
+        example2.mergesort();
+        String testAns2 = example2.getArray().toString();
+        String ans2 = "[1, 2, 3, 4, 5]";
+    assertEquals(ans2,testAns2);
+       
+       //Testing case where numbers strictly decrease
+        example3.insertAsList(10);
+        example3.insertAsList(9);
+        example3.insertAsList(8);
+        example3.insertAsList(7);
+        example3.insertAsList(6);
+        example3.mergesort();
+        String testAns3 = example3.getArray().toString();
+        String ans3 = "[6, 7, 8, 9, 10]";
+    assertEquals(ans3,testAns3);
+       
+
+       //Testing case where numbers decrease and increase 
+        example4.insertAsList(10);
+        example4.insertAsList(0);
+        example4.insertAsList(5);
+        example4.insertAsList(24);
+        example4.insertAsList(6);
+        example4.mergesort();
+        String testAns4 = example4.getArray().toString();
+        String ans4 = "[0, 5, 6, 10, 24]";
+    assertEquals(ans4,testAns4);
+        
     }
-   @Test public void testQuicksort()
+   @Test 
+   public void testQuicksort()
    {
         //Testing case where numbers increase
         example2.insertAsList(1);
@@ -51,8 +85,7 @@ public class SorterTest
         example2.quicksort();
         String testAns2 = example2.getArray().toString();
         String ans2 = "[1, 2, 3, 4, 5]";
-	assertEquals(ans2,testAns2);
-       
+    assertEquals(ans2,testAns2);
        
        //Testing case where numbers strictly decrease
         example3.insertAsList(10);
@@ -63,10 +96,9 @@ public class SorterTest
         example3.quicksort();
         String testAns3 = example3.getArray().toString();
         String ans3 = "[6, 7, 8, 9, 10]";
-	assertEquals(ans3,testAns3);
+    assertEquals(ans3,testAns3);
        
-       
-       
+
        //Testing case where numbers decrease and increase 
         example4.insertAsList(10);
         example4.insertAsList(0);
@@ -76,8 +108,47 @@ public class SorterTest
         example4.quicksort();
         String testAns4 = example4.getArray().toString();
         String ans4 = "[0, 5, 6, 10, 24]";
-	assertEquals(ans4,testAns4);
-}
+        assertEquals(ans4,testAns4);
+    }
+    @Test
+    public void testHeapSort()
+    {  //Testing case where numbers increase
+        //Using the insert method needed to create a max heap
+        example2.insert(1);
+        example2.insert(2);
+        example2.insert(3);
+        example2.insert(4);
+        example2.insert(5);
+        example2.heapsort();
+        String testAns2 = example2.getArray().toString();
+        String ans2 = "[1, 2, 3, 4, 5]";
+        assertEquals(ans2,testAns2);
+       
+       //Testing case where numbers strictly decrease
+        example3.insert(10);
+        example3.insert(9);
+        example3.insert(8);
+        example3.insert(7);
+        example3.insert(6);
+        example3.heapsort();
+        String testAns3 = example3.getArray().toString();
+        String ans3 = "[6, 7, 8, 9, 10]";
+        assertEquals(ans3,testAns3);
+       
+
+       //Testing case where numbers decrease and increase 
+        example4.insert(10);
+        example4.insert(0);
+        example4.insert(5);
+        example4.insert(24);
+        example4.insert(6);
+        example4.heapsort();
+        String testAns4 = example4.getArray().toString();
+        String ans4 = "[0, 5, 6, 10, 24]";
+        assertEquals(ans4,testAns4);
+    
+    }
+ 
 
     /**
      * Tears down the test fixture.
